@@ -40,7 +40,7 @@ function! gift#window#tabpagewinnr(nr)
 	if a:nr == 0
 		return gift#window#tabpagewinnr(gift#window#uniq_nr())
 	endif
-	let tabwinnrs = gift#tabpagewinnr_all()
+	let tabwinnrs = gift#tabpagewinnr_list()
 	for [tabnr, winnr] in tabwinnrs
 		if gift#uniq_winnr(winnr, tabnr) == a:nr
 			return [tabnr, winnr]

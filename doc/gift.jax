@@ -27,12 +27,12 @@ gift#bufnr({tabpagenr}, {winnr})数値	{tabpagenr}, {winnr} のバッ
 						ファ番号
 gift#tabpagewinnr([{uniqwinnr}])リスト	{uniqwinnr} の {tabpagenr} と {winnr}
 					のリスト
-gift#tabpagewinnr_all()		リスト	タブページ、ウィンドウ番号のすべての
+gift#tabpagewinnr_list()		リスト	タブページ、ウィンドウ番号のすべての
 					組み合わせのリスト
 gift#uniq_winnr([{winnr}, {tabpagenr}])
 				整数	{winnr}, {tabpagenr} のウィンドウのユ
 					ニークなウィンドウ番号
-gift#uniq_winnr_all()		リスト	開かれているすべてのユニークなウィン
+gift#uniq_winnr_list()		リスト	開かれているすべてのユニークなウィン
 					ドウ番号
 gift#find({string})		リスト	{string} にまっちするタブページ、ウィ
 					ンドウ番号のリスト
@@ -43,7 +43,7 @@ gift#getwinvar({uniqwinnr}, {varname} [, {def}])
 gift#setwinvar({uniqwinnr}, {varname}, {val}])
 					{uniqwinnr} の変数 {varname} に {val}
 					を設定する
-gift#openable_bufnr_all()	リスト	いずれかのウィンドウで開かれているバッ
+gift#openable_bufnr_list()	リスト	いずれかのウィンドウで開かれているバッ
 					ファのリスト
 
 
@@ -60,12 +60,12 @@ gift#tabpagewinnr([{uniqwinnr}])		*gift#tabpagewinnr()*
 	{uniqwinnr} が渡されなかった場合はカレントのウィンドウが参照されます。
 
 
-gift#tabpagewinnr_all()				*gift#tabpagewinnr_all()*
+gift#tabpagewinnr_list()			*gift#tabpagewinnr_list()*
 	開かれているタブページ、ウィンドウ番号のすべての組み合わせのリストを
 	返す。
 Example: >
 	" [[タブページ, ウィンドウ番号], [タブページ, ウィンドウ番号],...]
-	echo gift#tabpagewinnr_all()
+	echo gift#tabpagewinnr_list()
 	" [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2], [3, 1], [3, 2], [3, 3]]
 
 gift#uniq_winnr([{winnr}, {tabpagenr}])		*gift#uniq_winnr()*
@@ -78,7 +78,7 @@ gift#uniq_winnr([{winnr}, {tabpagenr}])		*gift#uniq_winnr()*
 	{winnr}, {tabpagenr} が渡されなければカレントのウィンドウが参照され
 	ます。
 
-gift#uniq_winnr_all()				*gift#uniq_winrnr_all()*
+gift#uniq_winnr_list()				*gift#uniq_winrnr_list()*
 	開かれているウィンドウの |gift#uniq_winnr()| の番号のリストを返します。
 	このリストはソート済みとは限りません。
 
@@ -135,10 +135,10 @@ gift#setwinvar({uniqwinnr}, {varname}, {val}])	*gift#setwinvar()*
 	{uniqwinnr} の変数 {varname} に {val} を設定する
 	{uniqwinnr} はユニークなウィンドウ番号を渡す。
 
-gift#openable_bufnr_all()			*gift#openable_bufnr_all()*
+gift#openable_bufnr_list()			*gift#openable_bufnr_list()*
 	いずれかのウィンドウで開かれているバッファのリストを返します。
 Example: >
-	echo gift#openable_bufnr_all()
+	echo gift#openable_bufnr_list()
 	" => [4, 20, 5, 7, 6, 36]
 <
 

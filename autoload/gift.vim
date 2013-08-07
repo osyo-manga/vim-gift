@@ -25,8 +25,8 @@ function! gift#bufnr(expr)
 endfunction
 
 
-function! gift#openable_bufnr_all()
-	return map(gift#tabpagewinnr_all(), "gift#bufnr([v:val[0], v:val[1]])")
+function! gift#openable_bufnr_list()
+	return map(gift#tabpagewinnr_list(), "gift#bufnr([v:val[0], v:val[1]])")
 endfunction
 
 
@@ -36,7 +36,7 @@ function! gift#tabpagewinnr(...)
 endfunction
 
 
-function! gift#tabpagewinnr_all()
+function! gift#tabpagewinnr_list()
 	return s:flatten(map(range(1, tabpagenr("$")), "map(range(1, tabpagewinnr(v:val, '$')), '['.v:val.', v:val]')"))
 endfunction
 
@@ -47,15 +47,15 @@ function! gift#uniq_winnr(...)
 endfunction
 
 
-function! gift#uniq_winnr_all(...)
-	return map(gift#tabpagewinnr_all(), "gift#uniq_winnr(v:val[1], v:val[0])")
+function! gift#uniq_winnr_list(...)
+	return map(gift#tabpagewinnr_list(), "gift#uniq_winnr(v:val[1], v:val[0])")
 endfunction
 
 
 
 function! gift#find(expr)
 	let gift_find_result = []
-	for [tabpagenr, winnr] in gift#tabpagewinnr_all()
+	for [tabpagenr, winnr] in gift#tabpagewinnr_list()
 		let bufnr = gift#bufnr([tabpagenr, winnr])
 		if eval(a:expr)
 			call add(gift_find_result, [tabpagenr, winnr])
@@ -66,7 +66,7 @@ endfunction
 
 
 function! gift#find_by(func)
-	return filter(gift#tabpagewinnr_all(), "a:func(gift#bufnr([v:val[0], v:val[1]), v:val[0], v:val[1])")
+	return filter(gift#tabpagewinnr_list(), "a:func(gift#bufnr([v:val[0], v:val[1]), v:val[0], v:val[1])")
 endfunction
 
 
