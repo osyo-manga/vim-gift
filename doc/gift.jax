@@ -43,6 +43,8 @@ gift#getwinvar({uniqwinnr}, {varname} [, {def}])
 gift#setwinvar({uniqwinnr}, {varname}, {val}])
 					{uniqwinnr} の変数 {varname} に {val}
 					を設定する
+gift#openable_bufnr_all()	リスト	いずれかのウィンドウで開かれているバッ
+					ファのリスト
 
 
 gift#bufnr({expr})				*gift#bufnr()*
@@ -133,17 +135,16 @@ gift#setwinvar({uniqwinnr}, {varname}, {val}])	*gift#setwinvar()*
 	{uniqwinnr} の変数 {varname} に {val} を設定する
 	{uniqwinnr} はユニークなウィンドウ番号を渡す。
 
-
+gift#openable_bufnr_all()			*gift#openable_bufnr_all()*
+	いずれかのウィンドウで開かれているバッファのリストを返します。
+Example: >
+	echo gift#openable_bufnr_all()
+	" => [4, 20, 5, 7, 6, 36]
+<
 
 ==============================================================================
 使用例						*gift-example*
 
-いずれかのウィンドウで開かれているすべてのバッファ番号を取得
-
-Example: >
-	echo map(gift#tabpagewinnr_all(), "gift#bufnr([v:val[0], v:val[1]])")
-	" => [4, 20, 5, 7, 6, 36]
-<
 
 
 ==============================================================================

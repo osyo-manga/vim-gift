@@ -25,6 +25,10 @@ function! gift#bufnr(expr)
 endfunction
 
 
+function! gift#openable_bufnr_all()
+	return map(gift#tabpagewinnr_all(), "gift#bufnr([v:val[0], v:val[1]])")
+endfunction
+
 
 function! gift#tabpagewinnr(...)
 	return a:0 == 0 ? gift#tabpagewinnr(gift#uniq_winnr())
