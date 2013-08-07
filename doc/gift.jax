@@ -1,0 +1,150 @@
+*gift.txt*		ウィンドウに対して固有の番号を振り分けるプラグイン
+
+==============================================================================
+目次						*gift-contents*
+
+概要				|gift-introduction|
+インターフェース		|gift-interface|
+  関数				  |gift-functions|
+使用例				|gift-example|
+
+
+==============================================================================
+概要						*gift-introduction*
+
+タブページ、ウィンドウ番号を処理する汎用的な関数をまとめたプラグインです。
+
+
+==============================================================================
+インターフェース				*gift-interface*
+
+------------------------------------------------------------------------------
+関数						*gift-functions*
+
+使用法				結果	説明	~
+
+gift#bufnr({tabpagenr}, {winnr})数値	{tabpagenr}, {winnr} のバッ
+						ファ番号
+gift#tabpagewinnr([{uniqwinnr}])リスト	{uniqwinnr} の {tabpagenr} と {winnr}
+					のリスト
+gift#tabpagewinnr_all()		リスト	タブページ、ウィンドウ番号のすべての
+					組み合わせのリスト
+gift#uniq_winnr([{winnr}, {tabpagenr}])
+				整数	{winnr}, {tabpagenr} のウィンドウのユ
+					ニークなウィンドウ番号
+gift#uniq_winnr_all()		リスト	開かれているすべてのユニークなウィン
+					ドウ番号
+gift#find({string})		リスト	{string} にまっちするタブページ、ウィ
+					ンドウ番号のリスト
+gift#set_current_window({expr})	整数	{expr} をカレントウィンドウに設定
+gift#close_window({expr})	整数	{expr} のウィンドウを閉じる
+gift#getwinvar({uniqwinnr}, {varname} [, {def}])
+				任意	{uniqwinnr} の {varname} または {def}
+gift#setwinvar({uniqwinnr}, {varname}, {val}])
+					{uniqwinnr} の変数 {varname} に {val}
+					を設定する
+
+
+gift#bufnr({expr})				*gift#bufnr()*
+	{expr} のバッファ番号を返します。
+	{expr} には以下の値を渡すことができます。
+
+	"ユニークなウィンドウ番号"         : 数値
+	"[タブページ番号, ウィンドウ番号]" : リスト
+
+gift#tabpagewinnr([{uniqwinnr}])		*gift#tabpagewinnr()*
+	{uniqwinnr} のタブページ、ウィンドウ番号を返します。
+	{uniqwinnr} にはユニークなウィンドウ番号が渡せます。
+	{uniqwinnr} が渡されなかった場合はカレントのウィンドウが参照されます。
+
+
+gift#tabpagewinnr_all()				*gift#tabpagewinnr_all()*
+	開かれているタブページ、ウィンドウ番号のすべての組み合わせのリストを
+	返す。
+Example: >
+	" [[タブページ, ウィンドウ番号], [タブページ, ウィンドウ番号],...]
+	echo gift#tabpagewinnr_all()
+	" [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2], [3, 1], [3, 2], [3, 3]]
+
+gift#uniq_winnr([{winnr}, {tabpagenr}])		*gift#uniq_winnr()*
+	ウィンドウ番号{winnr}, タブページ番号{tabpagenr} で開かれているウィ
+	ンドウのユニークなウィンドウ番号を返します。
+	このウィンドウ番号は１つのウィンドウに対して１つの番号が割り振られま
+	す。
+	この番号はウィンドウが開かれた順の番号とはかぎらないので注意してくだ
+	さい。
+	{winnr}, {tabpagenr} が渡されなければカレントのウィンドウが参照され
+	ます。
+
+gift#uniq_winnr_all()				*gift#uniq_winrnr_all()*
+	開かれているウィンドウの |gift#uniq_winnr()| の番号のリストを返します。
+	このリストはソート済みとは限りません。
+
+gift#find({string})				*gift#find()*
+	{string} の条件マッチしたタブページ、ウィンドウ番号のリストを返します。
+	{string} は |filter()| のように式を文字列で渡すことができます。
+	{string} の式では捜査するウィンドウの以下の変数を使用することができま
+	す。
+	ローカル変数は使用できないので注意してください。
+
+	"bufnr"     : バッファ番号
+	"tabpagenr" : タブページ番号
+	"winnr"     : ウィンドウ番号
+Example: >
+	" gift.vim という名前のバッファ名を探す
+	echo gift#find("bufname(bufnr) == 'gift.vim'")
+	" => [[2, 1], [2, 2]]
+
+	" 最初に見つかったバッファ番号5 を閉じる
+	echo gift#close_window(get(gift#find("bufnr == 5"), 0, []))
+<
+
+gift#set_current_window({expr})			*gift#set_current_window()*
+	{expr} をカレントウィンドウに設定します。
+	対象のウィンドウが存在しない場合は -1 を返します。
+	{expr} には以下の値を渡すことができます。
+	
+	"ユニークなウィンドウ番号"         : 数値
+	"[タブページ番号, ウィンドウ番号]" : リスト
+Example: >
+	" タブページ3、ウィンドウ番号2 をカレントウィンドウにする
+	echo gift#set_current_window([3, 2])
+<
+
+gift#close_window({expr})			*gift#close_window()*
+	{expr} のウィンドウを閉じます。
+	対象のウィンドウが存在しない場合は -1 を返します。
+	この関数は一旦 {expr} のウィンドウに移動する副作用があります。
+	{expr} には以下の値を渡すことができます。
+	
+	"ユニークなウィンドウ番号"         : 数値
+	"[タブページ番号, ウィンドウ番号]" : リスト
+Example: >
+	" タブページ3、ウィンドウ番号2 を閉じる
+	echo gift#close_window([3, 2])
+<
+
+gift#getwinvar({uniqwinnr}, {varname} [, {def}])*gift#getwinvar()*
+	{uniqwinnr} の {varname} 変数を返します。
+	変数が取得できなければ {def} を返します。
+	{uniqwinnr} はユニークなウィンドウ番号を渡す。
+
+gift#setwinvar({uniqwinnr}, {varname}, {val}])	*gift#setwinvar()*
+	{uniqwinnr} の変数 {varname} に {val} を設定する
+	{uniqwinnr} はユニークなウィンドウ番号を渡す。
+
+
+
+==============================================================================
+使用例						*gift-example*
+
+いずれかのウィンドウで開かれているすべてのバッファ番号を取得
+
+Example: >
+	echo map(gift#tabpagewinnr_all(), "gift#bufnr([v:val[0], v:val[1]])")
+	" => [4, 20, 5, 7, 6, 36]
+<
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
