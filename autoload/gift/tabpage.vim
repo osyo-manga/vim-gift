@@ -14,7 +14,7 @@ endfunction
 function! gift#tabpage#numbering(...)
 	let tabnr = get(a:, 1, tabpagenr())
 	let uniq_nr = gift#tabpage#make_uniq_nr()
-	call settabvar(tabnr, "gift_tabpage_uniq_nr", uniq_nr)
+	call settabvar(tabnr, "gift_uniq_tabpagenr", uniq_nr)
 	return uniq_nr
 endfunction
 
