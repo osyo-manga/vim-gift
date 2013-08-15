@@ -85,15 +85,9 @@ function! gift#close_window(expr, ...)
 endfunction
 
 
-function! gift#close_window_by(expr, findexpr, ...)
-	let close_cmd = get(a:, 1, "close")
-	return map(gift#find(a:findexpr), 'gift#close_window(v:val)')
-endfunction
-
-
 function! gift#close_window_by(expr, ...)
 	let close_cmd = get(a:, 1, "close")
-	return map(gift#find(a:expr), 'gift#close_window(v:val, close_cmd)')
+	return map(map(gift#find(a:expr), "gift#uniq_winnr(v:val[1], v:val[0])"), 'gift#close_window(v:val, close_cmd)')
 endfunction
 
 

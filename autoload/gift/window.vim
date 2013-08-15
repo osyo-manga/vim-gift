@@ -91,7 +91,7 @@ function! gift#window#close(nr, close_cmd)
 		return -1
 	endif
 	execute a:close_cmd
-	call gift#window#set_current(current)
+	return gift#window#set_current(current)
 endfunction
 
 
