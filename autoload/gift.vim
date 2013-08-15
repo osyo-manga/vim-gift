@@ -55,10 +55,10 @@ endfunction
 
 function! gift#find(expr)
 	let gift_find_result = []
-	for [tabpagenr, winnr] in gift#tabpagewinnr_list()
-		let bufnr = gift#bufnr([tabpagenr, winnr])
+	for [tabnr, winnr] in gift#tabpagewinnr_list()
+		let bufnr = gift#bufnr([tabnr, winnr])
 		if eval(a:expr)
-			call add(gift_find_result, [tabpagenr, winnr])
+			call add(gift_find_result, [tabnr, winnr])
 		endif
 	endfor
 	return gift_find_result
@@ -72,15 +72,28 @@ endfunction
 
 function! gift#set_current_window(expr)
 	return type(a:expr) == type([])
-\		 ? gift#set_current_window(gift#uniq_winnr(a:expr[0], a:expr[1]))
+\		 ? gift#set_current_window(gift#uniq_winnr(a:expr[1], a:expr[0]))
 \		 : gift#window#set_current(a:expr)
 endfunction
 
 
-function! gift#close_window(expr)
+function! gift#close_window(expr, ...)
+	let close_cmd = get(a:, 1, "close")
 	return type(a:expr) == type([])
-\		 ? gift#close_window(gift#uniq_winnr(a:expr[0], a:expr[1]))
-\		 : gift#window#close(a:expr)
+\		 ? gift#close_window(gift#uniq_winnr(a:expr[1], a:expr[0]), close_cmd)
+\		 : gift#window#close(a:expr, close_cmd)
+endfunction
+
+
+function! gift#close_window_by(expr, findexpr, ...)
+	let close_cmd = get(a:, 1, "close")
+	return map(gift#find(a:findexpr), 'gift#close_window(v:val)')
+endfunction
+
+
+function! gift#close_window_by(expr, ...)
+	let close_cmd = get(a:, 1, "close")
+	return map(gift#find(a:expr), 'gift#close_window(v:val, close_cmd)')
 endfunction
 
 

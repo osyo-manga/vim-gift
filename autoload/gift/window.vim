@@ -84,13 +84,13 @@ function! gift#window#set_current(nr)
 endfunction
 
 
-function! gift#window#close(nr)
+function! gift#window#close(nr, close_cmd)
 	let current = gift#uniq_winnr()
 	let result = gift#window#set_current(a:nr)
 	if result == -1
 		return -1
 	endif
-	close
+	execute a:close_cmd
 	call gift#window#set_current(current)
 endfunction
 

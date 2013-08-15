@@ -38,6 +38,7 @@ gift#find({string})		リスト	{string} にまっちするタブページ、ウ�
 					ンドウ番号のリスト
 gift#set_current_window({expr})	整数	{expr} をカレントウィンドウに設定
 gift#close_window({expr})	整数	{expr} のウィンドウを閉じる
+gift#close_window_by({expr})	文字列	{expr} にマッチするウィンドウを閉じる
 gift#getwinvar({uniqwinnr}, {varname} [, {def}])
 				任意	{uniqwinnr} の {varname} または {def}
 gift#setwinvar({uniqwinnr}, {varname}, {val}])
@@ -89,9 +90,9 @@ gift#find({string})				*gift#find()*
 	す。
 	ローカル変数は使用できないので注意してください。
 
-	"bufnr"     : バッファ番号
-	"tabpagenr" : タブページ番号
-	"winnr"     : ウィンドウ番号
+	"bufnr" : バッファ番号
+	"tabnr" : タブページ番号
+	"winnr" : ウィンドウ番号
 Example: >
 	" gift.vim という名前のバッファ名を探す
 	echo gift#find("bufname(bufnr) == 'gift.vim'")
@@ -113,8 +114,10 @@ Example: >
 	echo gift#set_current_window([3, 2])
 <
 
-gift#close_window({expr})			*gift#close_window()*
+gift#close_window({expr} [, {closecmd}])	*gift#close_window()*
 	{expr} のウィンドウを閉じます。
+	ウィンドウと閉じるコマンドは {closecmd} で指定することができます。
+	デフォルトでは |:close| を使用します。
 	対象のウィンドウが存在しない場合は -1 を返します。
 	この関数は一旦 {expr} のウィンドウに移動する副作用があります。
 	{expr} には以下の値を渡すことができます。
@@ -124,7 +127,13 @@ gift#close_window({expr})			*gift#close_window()*
 Example: >
 	" タブページ3、ウィンドウ番号2 を閉じる
 	echo gift#close_window([3, 2])
-<
+<<
+
+gift#close_window_by({expr} [, {closecmd}])	*gift#close_window_by()*
+	{expr} の条件にマッチしたウィンドウを閉じます。
+	それ以外は |gift#close_window()| と同等の動作をします。
+	{expr} には |gift#find()| に渡す {string} と同じものが使用できます。
+
 
 gift#getwinvar({uniqwinnr}, {varname} [, {def}])*gift#getwinvar()*
 	{uniqwinnr} の {varname} 変数を返します。
