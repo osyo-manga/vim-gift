@@ -35,6 +35,7 @@ gift#tabpagewinnr_list()		リスト	タブページ、ウィンドウ番号の�
 gift#uniq_winnr([{winnr}, {tabpagenr}])
 				整数	{winnr}, {tabpagenr} のウィンドウのユ
 					ニークなウィンドウ番号
+gift#winnr({uniqwinnr})		数値	{uniqwinnr} のウィンドウ番号
 gift#uniq_winnr_list()		リスト	開かれているすべてのユニークなウィン
 					ドウ番号
 gift#find({string})		リスト	{string} にマッチするタブページ、ウィ
@@ -81,6 +82,9 @@ gift#uniq_winnr([{winnr}, {tabpagenr}])		*gift#uniq_winnr()*
 	さい。
 	{winnr}, {tabpagenr} が渡されなければカレントのウィンドウが参照され
 	ます。
+
+gift#winnr({uniqwinnr})				*gift#winnr()*
+	{uniqwinnr} のウィンドウ番号を返します。
 
 gift#uniq_winnr_list()				*gift#uniq_winrnr_list()*
 	開かれているウィンドウの |gift#uniq_winnr()| の番号のリストを返します。

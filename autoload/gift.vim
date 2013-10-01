@@ -47,6 +47,12 @@ function! gift#uniq_winnr(...)
 endfunction
 
 
+function! gift#winnr(uniqnr)
+	let [tabnr, winnr] = gift#window#tabpagewinnr(a:uniqnr)
+	return winnr
+endfunction
+
+
 function! gift#uniq_winnr_list(...)
 	return map(gift#tabpagewinnr_list(), "gift#uniq_winnr(v:val[1], v:val[0])")
 endfunction
