@@ -37,7 +37,7 @@ gift#uniq_winnr([{winnr}, {tabpagenr}])
 					ニークなウィンドウ番号
 gift#uniq_winnr_list()		リスト	開かれているすべてのユニークなウィン
 					ドウ番号
-gift#find({string})		リスト	{string} にまっちするタブページ、ウィ
+gift#find({string})		リスト	{string} にマッチするタブページ、ウィ
 					ンドウ番号のリスト
 gift#set_current_window({expr})	整数	{expr} をカレントウィンドウに設定
 gift#close_window({expr})	整数	{expr} のウィンドウを閉じる
