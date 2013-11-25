@@ -40,7 +40,7 @@ gift#uniq_winnr_list()		リスト	開かれているすべてのユニークな�
 					ドウ番号
 gift#find({string})		リスト	{string} にマッチするタブページ、ウィ
 					ンドウ番号のリスト
-gift#set_current_window({expr})	整数	{expr} をカレントウィンドウに設定
+gift#jump_window({expr})	整数	{expr} のウィンドウへ移動する
 gift#close_window({expr})	整数	{expr} のウィンドウを閉じる
 gift#close_window_by({expr})	文字列	{expr} にマッチするウィンドウを閉じる
 gift#getwinvar({uniqwinnr}, {varname} [, {def}])
@@ -109,7 +109,7 @@ Example: >
 	echo gift#close_window(get(gift#find("bufnr == 5"), 0, []))
 <
 
-gift#set_current_window({expr})			*gift#set_current_window()*
+gift#jump_window({expr})			*gift#jump_window()*
 	{expr} をカレントウィンドウに設定します。
 	対象のウィンドウが存在しない場合は -1 を返します。
 	{expr} には以下の値を渡すことができます。
@@ -118,7 +118,7 @@ gift#set_current_window({expr})			*gift#set_current_window()*
 	"[タブページ番号, ウィンドウ番号]" : リスト
 Example: >
 	" タブページ3、ウィンドウ番号2 をカレントウィンドウにする
-	echo gift#set_current_window([3, 2])
+	echo gift#jump_window([3, 2])
 <
 
 gift#close_window({expr} [, {closecmd}])	*gift#close_window()*

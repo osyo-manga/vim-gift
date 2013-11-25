@@ -76,10 +76,15 @@ function! gift#find_by(func)
 endfunction
 
 
-function! gift#set_current_window(expr)
+function! gift#jump_window(expr)
 	return type(a:expr) == type([])
-\		 ? gift#set_current_window(gift#uniq_winnr(a:expr[1], a:expr[0]))
+\		 ? gift#jump_window(gift#uniq_winnr(a:expr[1], a:expr[0]))
 \		 : gift#window#set_current(a:expr)
+endfunction
+
+
+function! gift#set_current_window(expr)
+	return gift#jump_window(a:expr)
 endfunction
 
 

@@ -73,7 +73,7 @@ endfunction
 
 
 
-function! gift#window#set_current(nr)
+function! gift#window#jump(nr)
 	let [tabnr, winnr] = gift#window#tabpagewinnr(a:nr)
 	if tabnr == 0 || winnr == 0
 		return -1
@@ -86,12 +86,12 @@ endfunction
 
 function! gift#window#close(nr, close_cmd)
 	let current = gift#uniq_winnr()
-	let result = gift#window#set_current(a:nr)
+	let result = gift#window#jump(a:nr)
 	if result == -1
 		return -1
 	endif
 	execute a:close_cmd
-	return gift#window#set_current(current)
+	return gift#window#jump(current)
 endfunction
 
 
