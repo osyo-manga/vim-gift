@@ -79,7 +79,7 @@ endfunction
 function! gift#jump_window(expr)
 	return type(a:expr) == type([])
 \		 ? gift#jump_window(gift#uniq_winnr(a:expr[1], a:expr[0]))
-\		 : gift#window#set_current(a:expr)
+\		 : gift#window#jump(a:expr)
 endfunction
 
 
