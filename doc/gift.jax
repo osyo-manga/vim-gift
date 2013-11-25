@@ -42,7 +42,9 @@ gift#find({string})		リスト	{string} にマッチするタブページ、ウ�
 					ンドウ番号のリスト
 gift#jump_window({expr})	整数	{expr} のウィンドウへ移動する
 gift#close_window({expr})	整数	{expr} のウィンドウを閉じる
-gift#close_window_by({expr})	文字列	{expr} にマッチするウィンドウを閉じる
+gift#close_window_by({expr})	整数	{expr} にマッチするウィンドウを閉じる
+gift#execute({expr}, {execute})	整数	{expr} のウィンドウで {execute} を
+					|:execute| する
 gift#getwinvar({uniqwinnr}, {varname} [, {def}])
 				任意	{uniqwinnr} の {varname} または {def}
 gift#setwinvar({uniqwinnr}, {varname}, {val}])
@@ -141,6 +143,19 @@ gift#close_window_by({expr} [, {closecmd}])	*gift#close_window_by()*
 	それ以外は |gift#close_window()| と同等の動作をします。
 	{expr} には |gift#find()| に渡す {string} と同じものが使用できます。
 
+
+gift#execute({expr}, {execute})			*gift#execute()*
+	{expr} のウィンドウに対して {execute} を |:execute| します。
+	対象のウィンドウが存在しない場合は -1 を返します。
+	この関数は一旦 {expr} のウィンドウに移動する副作用があります。
+	{expr} には以下の値を渡すことができます。
+	
+	"ユニークなウィンドウ番号"         : 数値
+	"[タブページ番号, ウィンドウ番号]" : リスト
+Example: >
+	" タブページ3、ウィンドウ番号2 に対して w:homu = 1 を設定する
+	echo gift#execute([3, 2], "let w:homu = 1")
+<<
 
 gift#getwinvar({uniqwinnr}, {varname} [, {def}])*gift#getwinvar()*
 	{uniqwinnr} の {varname} 変数を返します。

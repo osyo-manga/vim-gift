@@ -102,6 +102,11 @@ function! gift#close_window_by(expr, ...)
 endfunction
 
 
+function! gift#execute(expr, execute)
+	return type(a:expr) == type([])
+\		 ? gift#execute(gift#uniq_winnr(a:expr[1], a:expr[0]), a:execute)
+\		 : gift#window#execute(a:expr, a:execute)
+endfunction
 
 
 function! gift#getwinvar(uniq_winnr, varname, ...)
@@ -113,8 +118,6 @@ endfunction
 function! gift#setwinvar(uniq_winnr, varname, val)
 	return gift#window#setvar(a:uniq_winnr, a:varname, a:val)
 endfunction
-
-
 
 
 

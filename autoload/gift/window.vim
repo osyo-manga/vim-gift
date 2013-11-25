@@ -85,12 +85,24 @@ endfunction
 
 
 function! gift#window#close(nr, close_cmd)
+	call gift#window#execute(a:nr, a:close_cmd)
+" 	let current = gift#uniq_winnr()
+" 	let result = gift#window#jump(a:nr)
+" 	if result == -1
+" 		return -1
+" 	endif
+" 	execute a:close_cmd
+" 	return gift#window#jump(current)
+endfunction
+
+
+function! gift#window#execute(nr, expr)
 	let current = gift#uniq_winnr()
 	let result = gift#window#jump(a:nr)
 	if result == -1
 		return -1
 	endif
-	execute a:close_cmd
+	execute a:expr
 	return gift#window#jump(current)
 endfunction
 
